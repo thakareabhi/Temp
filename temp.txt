@@ -1,0 +1,255 @@
+Absolutely, Abhinav. Here’s your fully revamped and comprehensive Devin prompt, incorporating database-backed configuration, Java-based enrichment modules, modular architecture, percentage-based row count validation, and a robust orchestrator design.
+
+This prompt is ready to use as-is for Devin or any engineering team to design, architect, and build the Master Archive Engine end-to-end.
+
+⸻
+
+✅ Devin Prompt: Build a Config-Driven, Modular Master Archive Engine
+
+⸻
+
+🎯 Objective:
+
+Design and implement a generic, scalable, and pluggable Master Archive Engine that enables flexible, file-based data ingestion pipelines driven by configurations stored in a relational database. Every file must pass through a series of modular processing steps: archival, validation, enrichment, and loading.
+
+The system must be fully configurable via the database, highly extensible, and allow different file types to follow different pipelines. The enrichment logic must be decoupled from the core engine and implemented as Java helper classes that can be executed dynamically as part of the pipeline.
+
+⸻
+
+🧱 Core Architectural Principles:
+	•	Modularity: Each pipeline step (archive, validate, enrich, load) is a standalone module with clear input/output contracts.
+	•	Configuration-driven: All behaviors are controlled via DB configuration — no static YAML/JSON files.
+	•	Extensibility: Support for new file types, validation rules, enrichment logic, and loading targets with minimal effort.
+	•	Auditability: Complete logging of file processing lifecycle and validation outcomes.
+	•	Technology-neutral Enrichment: Enrichment is done via external Java classes invoked dynamically.
+
+⸻
+
+📦 Core Modules and Responsibilities:
+
+⸻
+
+1. 📥 Arrival Watcher Service
+	•	Monitors a predefined Arrival Folder (local path or S3 bucket).
+	•	Detects new files and matches them against configured file type patterns.
+	•	Triggers the orchestrator with file metadata.
+	•	Supports:
+	•	Pattern-based file type detection
+	•	Cron-based polling or filesystem event triggers
+
+⸻
+
+2. 📦 Archive Service
+	•	Immediately archives every incoming file before any further processing.
+	•	Archive destination is configured per file type (e.g., S3 path or backup folder).
+	•	Supports file versioning using:
+	•	Timestamps
+	•	UUIDs
+	•	Hashes (for de-duplication)
+	•	Fails the pipeline if archiving is unsuccessful.
+	•	Optionally logs archive metadata (file size, timestamp, archive path).
+
+⸻
+
+3. ✅ Validation Service
+	•	Performs data validation in 3 layers:
+	•	Schema Validation: Required columns, header checks, data types.
+	•	Business Rule Validation: Regex, nullability, ID formats, etc.
+	•	Row Count Threshold Validation (Percentage-Based):
+	•	Uses a configurable baseline row count.
+	•	Ensures the file has rows within a defined percentage range (e.g., 80%–120%).
+	•	Prevents processing of abnormally large/small files.
+	•	Validation results include:
+	•	Detailed error logs (field name, row number, issue)
+	•	Summary report (validation status, failure reason)
+
+⸻
+
+4. ✨ Enrichment Service
+	•	Executes external Java helper classes to enrich file data.
+	•	Each file type has an associated Java class that implements a standard interface (e.g., EnrichmentProcessor).
+	•	The main engine invokes these classes via:
+	•	Shell execution (if outside JVM)
+	•	Reflection (if running within Java)
+	•	Enrichment logic may include:
+	•	Adding derived/calculated fields
+	•	Mapping codes to descriptions
+	•	External API lookups or DB joins
+	•	The Java class must accept an input file path and return an enriched output file path (or overwrite in-place).
+
+⸻
+
+5. 🚀 Loader Service
+	•	Loads the final output into a target database.
+	•	Target table, column mappings, and load strategy (insert/upsert) are all stored in DB.
+	•	Supports:
+	•	Batch inserts
+	•	Transaction rollback on failure
+	•	Logging the number of records inserted, failed, or skipped
+	•	Validates schema compatibility before loading.
+
+⸻
+
+6. 🧠 Pipeline Orchestrator
+	•	Coordinates the execution of all steps per file based on configuration.
+	•	Reads the sequence of steps and their configurations from the database:
+	•	archive → validate → enrich → load
+	•	Logs the execution status of each step.
+	•	Handles:
+	•	Conditional execution (e.g., skip enrichment if not configured)
+	•	Retry logic for failed steps
+	•	Exception handling and recovery
+	•	Emits processing lifecycle events/logs.
+
+⸻
+
+🗃️ Database Schema (Finalized Config Tables)
+
+⸻
+
+1. file_types
+
+Defines supported file types.
+
+Column	Description
+id (PK)	Unique ID
+name	e.g., “employee_data”
+file_pattern	Regex/pattern to identify file type
+expected_extension	csv, xlsx, json, etc.
+enabled	Whether processing is active for this type
+
+
+⸻
+
+2. pipeline_steps
+
+Defines ordered processing steps for each file type.
+
+Column	Description
+file_type_id (FK)	From file_types
+step_order	Execution order (1=archive, 2=validate, etc.)
+step_type	One of: archive, validate, enrich, load
+enabled	Whether this step should run
+config_ref_id	Points to related config table row
+
+
+⸻
+
+3. validation_rules
+
+Validation logic for each file type.
+
+Column	Description
+file_type_id (FK)	
+required_columns	JSON list of required columns
+regex_validations	JSON object with column → regex mappings
+row_count_baseline	Integer expected baseline rows
+min_percentage	Minimum % of baseline (e.g., 80)
+max_percentage	Maximum % of baseline (e.g., 120)
+strict_mode	Fail immediately if any rule fails
+
+
+⸻
+
+4. enrichment_rules
+
+Enrichment logic per file type.
+
+Column	Description
+file_type_id (FK)	
+class_name	Fully qualified Java class (e.g., com.enrich.EmployeeRoleMapper)
+parameters	Optional JSON object with config parameters
+enabled	
+
+
+⸻
+
+5. load_configs
+
+Defines destination table and strategy.
+
+Column	Description
+file_type_id (FK)	
+target_table	e.g., “employee_master”
+column_mappings	JSON of file → DB column map
+load_mode	insert, upsert, truncate_insert
+batch_size	Number of rows per insert batch
+
+
+⸻
+
+6. processing_logs and step_logs
+
+Tracks status of every file and each step during processing.
+
+⸻
+
+🧪 Sample Processing Scenarios
+
+⸻
+
+✅ Example 1: Employee File (employee.csv)
+	•	Pattern: employee_*.csv
+	•	Pipeline: archive → validate → enrich → load
+	•	Validation:
+	•	Required columns: id, name, role_code
+	•	Row count baseline: 10,000 (acceptable range: 8,000–12,000)
+	•	Enrichment: Map role_code → role_name via Java class
+	•	Load: Insert into employees table
+
+⸻
+
+✅ Example 2: Product Master (product.xlsx)
+	•	Pipeline: archive → validate → load
+	•	No enrichment
+	•	Regex validation for sku_code
+
+⸻
+
+✅ Example 3: JSON Feed (orders.json)
+	•	Pipeline: archive → load
+	•	No validation or enrichment
+
+⸻
+
+📡 Monitoring and Observability
+	•	Log every file lifecycle event with:
+	•	File name, type, processing time
+	•	Step status: Success / Fail / Skipped
+	•	Failure reason if applicable
+	•	Expose health check endpoints per service
+	•	Optionally export metrics to Prometheus or dashboard (Grafana)
+
+⸻
+
+🔧 Tech Stack Guidelines (Flexible)
+
+Layer	Suggested Tech Options
+Core engine	Python / Node.js
+Config storage	PostgreSQL / MySQL
+Enrichment logic	Java helper classes
+File I/O	Local FS + S3 (via SDK)
+Orchestration	Cron jobs / Internal queue / Event triggers
+Logging	JSON logs or centralized log store
+Monitoring	REST health endpoints / Grafana (optional)
+
+
+⸻
+
+📁 Deliverables
+	•	Well-structured modular codebase
+	•	SQL schema for all config and tracking tables
+	•	Example entries for 2–3 file types
+	•	Sample Java enrichment class interface and demo implementation
+	•	README and setup instructions
+	•	Local test scripts and logs
+
+⸻
+
+Let me know if you’d also like:
+	•	✅ A high-level architecture diagram
+	•	✅ Sample SQL inserts for seeding config
+	•	✅ Java enrichment interface template
+	•	✅ CI/CD or deployment setup guidance
+
+This is now a fully enterprise-ready foundation for a flexible data ingestion and pipeline automation system.
