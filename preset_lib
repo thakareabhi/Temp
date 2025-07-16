@@ -1,0 +1,180 @@
+✅ Requirement Gathering
+
+1. Initiation Preset
+- IP: Raw business requirements (unstructured text)
+- OP: Structured technical requirement document
+- Prompt Behavior: “Convert the following business input into a structured technical requirement.”
+
+2. Clarification Preset
+- IP: Ambiguous or incomplete requirements
+- OP: Refined and clarified requirements with assumptions/questions
+- Prompt Behavior: “Identify gaps or ambiguities in the requirement and clarify them.”
+
+3. Persona Simulation Preset
+- IP: Requirement document
+- OP: Stakeholder-perspective-based feedback
+- Prompt Behavior: “Evaluate these requirements from the POV of [user/admin/etc.] and suggest improvements.”
+
+---
+
+🏗️ System Design
+
+4. Design Preset
+- IP: Structured requirements
+- OP: Architecture diagram, high-level design plan
+- Prompt Behavior: “Generate architecture and component design for the system.”
+
+5. Module Planning Preset
+- IP: System design
+- OP: Defined modules, responsibilities, and interactions
+- Prompt Behavior: “Break down the design into functional modules with descriptions.”
+
+6. Database Schema Preset
+- IP: Entity descriptions, fields, and relationships
+- OP: Normalized SQL/NoSQL schema
+- Prompt Behavior: “Generate a database schema for the following entities and relationships.”
+
+7. API Spec Preset
+- IP: Functional requirements or user stories
+- OP: OpenAPI/Swagger specification
+- Prompt Behavior: “Create REST API specs with endpoints, methods, inputs, and outputs.”
+
+8. Data Flow Preset
+- IP: Process and system context
+- OP: Visual or textual data flow descriptions
+- Prompt Behavior: “Illustrate data flow between components and storage.”
+
+---
+
+💻 Coding Phase
+
+9. Code Generation Preset
+- IP: Design + module plan + tech stack
+- OP: Functional backend/frontend code
+- Prompt Behavior: “Generate production-ready code for the module using [tech stack].”
+
+10. Logic Builder Preset
+- IP: Function description + logic rules
+- OP: Complete function/method with condition handling
+- Prompt Behavior: “Write a function that implements the following logic, handling all edge cases.”
+
+11. Component Builder Preset
+- IP: UI description or design spec
+- OP: Code for reusable UI components
+- Prompt Behavior: “Build a [React/Flutter/etc.] UI component for the following functionality.”
+
+12. Code Refactor Preset
+- IP: Existing code
+- OP: Cleaner, modular, optimized code
+- Prompt Behavior: “Refactor this code for better readability and performance.”
+
+13. Code Explainer Preset
+- IP: Source code
+- OP: Line-by-line explanation or summary
+- Prompt Behavior: “Explain what this code does and how it works.”
+
+---
+
+🧪 Testing & Feedback Loop
+
+14. Test Scenario Generator Preset
+- IP: Requirements and user stories
+- OP: Functional, boundary, and negative test scenarios
+- Prompt Behavior: “List all possible test scenarios for the following features.”
+
+15. Test Case Generator Preset
+- IP: Source code or function
+- OP: Unit or integration test cases
+- Prompt Behavior: “Generate [unit/integration] test cases for this code.”
+
+16. Test Coverage Analyzer Preset
+- IP: Test suite + source code
+- OP: Coverage report and gap analysis
+- Prompt Behavior: “Analyze test coverage and identify missing paths.”
+
+17. Bug Diagnosis Preset
+- IP: Failing test output + related code
+- OP: Root cause and suggested fix
+- Prompt Behavior: “Find the root cause of these test failures and recommend fixes.”
+
+18. Validation Preset
+- IP: Implemented feature + expected behavior
+- OP: Pass/fail status + validation report
+- Prompt Behavior: “Validate this implementation against the expected behavior.”
+
+---
+
+🔍 Review, Optimization & Compliance
+
+19. Critique & Recommendation Preset
+- IP: Code + requirement
+- OP: Review report with improvement suggestions
+- Prompt Behavior: “Review the code for quality, performance, and requirement alignment.”
+
+20. Compliance Validation Preset
+- IP: Code + compliance checklist
+- OP: Compliance status report
+- Prompt Behavior: “Validate this code against the following compliance rules.”
+
+21. Security Review Preset
+- IP: Source code or app architecture
+- OP: Security risk assessment and fixes
+- Prompt Behavior: “Identify any security risks or vulnerabilities in this code.”
+
+22. Performance Optimization Preset
+- IP: Performance logs or slow code
+- OP: Recommendations for speed/memory improvement
+- Prompt Behavior: “Optimize this code for better performance and lower latency.”
+
+23. Maintainability Score Preset
+- IP: Codebase
+- OP: Maintainability score with reasons
+- Prompt Behavior: “Assess this code’s maintainability and suggest improvements.”
+
+---
+
+🚀 Deployment & Documentation
+
+24. CI/CD Pipeline Preset
+- IP: Project type + environment details
+- OP: GitHub Actions / Jenkins pipelines
+- Prompt Behavior: “Create a CI/CD pipeline for this [Node.js/Java/Python] project.”
+
+25. Docker/K8s Config Preset
+- IP: App structure + dependencies
+- OP: Dockerfile, docker-compose, K8s manifests
+- Prompt Behavior: “Generate Docker and Kubernetes configs for this application.”
+
+26. Infra as Code Preset
+- IP: Cloud service + architecture plan
+- OP: Terraform or CloudFormation scripts
+- Prompt Behavior: “Provision the described infrastructure using Terraform.”
+
+27. Deployment Readiness Preset
+- IP: Code + deployment checklist
+- OP: Readiness score or report
+- Prompt Behavior: “Check if the application is ready for production deployment.”
+
+28. Documentation Generator Preset
+- IP: Project code or design
+- OP: README, API docs, usage guides
+- Prompt Behavior: “Generate documentation for this application or module.”
+
+---
+
+🧠 Meta / Intelligence Layer
+
+29. Prompt Tracker Preset
+- IP: Prompt history + outputs
+- OP: Prompt quality analysis and logs
+- Prompt Behavior: “Analyze previous prompt-output pairs for consistency and performance.”
+
+30. AI Feedback Preset
+- IP: Prompt failures or gaps
+- OP: Improved prompt or guidance
+- Prompt Behavior: “Improve this prompt to fix the issues in the previous output.”
+
+31. Preset Chain Manager Preset
+- IP: Preset dependency tree
+- OP: Optimized execution order and orchestration logic
+- Prompt Behavior: “Determine and manage the correct sequence of preset execution.”
