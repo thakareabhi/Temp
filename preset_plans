@@ -1,0 +1,86 @@
+AI Prompt-Driven Software Engineering Framework
+-----------------------------------------------
+
+Objective:
+To create a modular, AI-powered development pipeline using reusable presets, each with a clearly defined Prompt Behavior, enabling developers to convert ideas into working software faster and more consistently.
+
+--------------------------------------------------
+1. Requirement Gathering
+--------------------------------------------------
+
+Preset: Initiation
+- Input: Business requirements (unstructured or semi-structured)
+- Output: Structured technical requirement + expected outcome document
+- Prompt Behavior: “Based on the following business requirement, create a structured technical spec and define the expected output.”
+
+--------------------------------------------------
+2. System Design
+--------------------------------------------------
+
+Preset: Design
+- Input: Structured requirement document
+- Output: High-level application design (architecture, APIs, flows)
+- Prompt Behavior: “Generate an architecture diagram and component interaction flow based on the system requirements.”
+
+Preset: Module Planning
+- Input: Design spec
+- Output: Database schema, microservice breakdown, interaction details
+- Prompt Behavior: “Based on this design, generate database schema and module-level responsibilities.”
+
+--------------------------------------------------
+3. Coding Phase
+--------------------------------------------------
+
+Preset: Code Generation
+- Input: Module plan + design
+- Output: Backend & frontend code (API endpoints, logic, UI scaffolds)
+- Prompt Behavior: “Write production-ready code for the following module using [tech stack], based on this design.”
+
+--------------------------------------------------
+4. Feedback Loop & Testing
+--------------------------------------------------
+
+Preset: Test Scenario Generation
+- Input: Requirements + system design
+- Output: Detailed test case scenarios (functional, edge, boundary)
+- Prompt Behavior: “Based on these requirements and design, list functional and edge test case scenarios.”
+
+Preset: Generate Test Cases
+- Input: Code or function description
+- Output: Unit tests, integration tests
+- Prompt Behavior: “Generate [unit/integration] tests for the following function/module.”
+
+Preset: Validation
+- Input: Code + test results
+- Output: Bug identification, code fixes, refactored segments
+- Prompt Behavior: “Analyze the following code and test results, and fix the failing parts or improve the logic.”
+
+--------------------------------------------------
+5. Review, Critique & Compliance
+--------------------------------------------------
+
+Preset: Critique & Recommendation
+- Input: Code + requirements
+- Output: Identified issues, design gaps, improvement suggestions
+- Prompt Behavior: “Review this solution for accuracy, performance, and alignment with the requirements. Suggest remediations.”
+
+Preset: Compliance Validation
+- Input: Requirements + data flow
+- Output: Validation % match, risk areas, alignment status
+- Prompt Behavior: “Compare the implementation and design with original requirements. Highlight mismatches and coverage percentage.”
+
+--------------------------------------------------
+Summary Table:
+--------------------------------------------------
+
+| Preset Name               | Phase                 | Prompt Behavior                                                   |
+|---------------------------|-----------------------|-------------------------------------------------------------------|
+| Initiation                | Requirement Gathering | Create structured tech spec from unstructured business need       |
+| Design                    | System Design         | Generate architecture and flows from requirements                 |
+| Module Planning           | System Design         | Break down design into schemas and module responsibilities        |
+| Code Generation           | Coding                | Generate code based on design                                     |
+| Test Scenario Generation  | Testing               | Create functional and edge-case test scenarios                    |
+| Generate Test Cases       | Testing               | Generate unit/integration tests from code                         |
+| Validation                | Testing/Debugging     | Analyze failures, refactor or suggest fixes                       |
+| Critique & Recommendation | Review                | Identify flaws and suggest technical remediations                 |
+| Compliance Validation     | Review/Validation     | Measure implementation coverage against requirement spec          |
